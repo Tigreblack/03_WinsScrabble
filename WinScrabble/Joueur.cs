@@ -88,6 +88,14 @@ namespace WinScrabble
             }
             return MeilleurMot;
         }
+        /// <summary>
+        /// Méthode qui retourne le nom du joueur
+        /// </summary>
+        /// <returns></returns>
+        public string GetunNom()
+        {
+            return this.nom;
+        }
         #endregion
     }
 }
