@@ -62,5 +62,115 @@ namespace WinScrabble
             return pts;
         }
 
+        public static string MeilleurMot(string mot, string mmots)
+        {
+            
+            int mot1 = PointsMot(mot);
+            int mot2 = PointsMot(mmots);
+            string lemot = "";
+
+            if (mot1 > mot2)
+            {
+                lemot = mot;
+            }
+            else
+            {
+                lemot = mmots;
+            }
+
+            return lemot;
+        }
+
+        /// <summary>
+        /// Méthode qui choisis 7 lettres au hasard dans l'alphabets et les renvoie dans  un tableau.
+        /// </summary>
+        /// <returns>le tableau en question de 7 lettres</returns>
+        public static string[] RandomLettres()
+        {
+            string[] selectedletter = new string[7];
+            string[] alphabets = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "n", "l", "m", "o", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z" };
+
+            int Lenght = 7;
+            var rand = new Random();
+
+            for (int i = 0; i < Lenght; i++)
+            {
+                // initialisation
+                string letter = "";
+
+                // attributs la lettre
+                int index = rand.Next(alphabets.Length);
+                letter = alphabets[index];
+
+                // ajoute la lettre dans le tableau
+                selectedletter[i] = letter + " ,";
+            }
+
+            // supprime les espaces et virgules pour la dernières valeurs du tableau
+            selectedletter[selectedletter.Length - 1] = selectedletter[selectedletter.Length - 1].Trim(',', ' ');
+
+            return selectedletter;
+        }
+
+        /// <summary>
+        /// Méthode qui retourne une chaine de lettre toute propre sans les virgules et espaces
+        /// </summary>
+        /// <param name="tableau"></param>
+        /// <returns>cleaned string</returns>
+        public static string Nettoyage(string[] tableau)
+        {
+            string cleaned = "";
+
+            foreach(string element in tableau)
+            {
+                element.Trim(',', ' ');
+                cleaned = cleaned + element;
+            }
+
+            return cleaned;
+        }
+        /// <summary>
+        /// Méthode qui choisis un joueur aléotoire parmis les 2 joueurs
+        /// </summary>
+        /// <param name="J1">Joueur 1</param>
+        /// <param name="J2">Joueur 2</param>
+        /// <returns>Le joueur choisis parmis les 2 joueurs </returns>
+        public static Joueur RandomJoueur(Joueur J1, Joueur J2)
+        {
+            int selected = 0;
+            var rand = new Random();
+            selected = rand.Next(1, 3);
+            if (selected == 1)
+                return J1;
+            else
+                return J2;
+        }
+
+        /// <summary>
+        /// Méthode qui permet de vérfier s'y les lettres sont bien respectées
+        /// </summary>
+        /// <param name="chaine">réponse</param>
+        /// <param name="verifie">liste des mots</param>
+        /// <returns>true ou false</returns>
+        public static bool Verificationlettres(string chaine, string verifie)
+        {
+            bool cac = false;
+
+            // Pour mettre des majuscules ou miniscules
+            string vef1 = verifie.ToUpper();
+            string c1 = chaine.ToUpper();
+
+            foreach( char s in c1)
+            {
+                if(!vef1.Contains(s.ToString()))
+                {
+                    cac = true;
+                    // casse le foreach s'y jamais il ya une autre lettre que dans la chaine verifie
+                    break;
+                }
+            }
+
+            return cac;
+        }
     }
 }

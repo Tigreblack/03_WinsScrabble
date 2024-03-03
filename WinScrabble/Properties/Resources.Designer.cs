@@ -83,6 +83,36 @@ namespace WinScrabble.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap city_lights_tokyo_night_wallpaper_preview {
+            get {
+                object obj = ResourceManager.GetObject("city-lights-tokyo-night-wallpaper-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap istockphoto_525271979_612x612__1_ {
+            get {
+                object obj = ResourceManager.GetObject("istockphoto-525271979-612x612 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pngtree_scrabble_words_with_a_yellow_smiley_face_image_13206225 {
+            get {
+                object obj = ResourceManager.GetObject("pngtree-scrabble-words-with-a-yellow-smiley-face-image_13206225", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ready_prepared_preparation_readiness {
             get {
                 object obj = ResourceManager.GetObject("ready-prepared-preparation-readiness", resourceCulture);

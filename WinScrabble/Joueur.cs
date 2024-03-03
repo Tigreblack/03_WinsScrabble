@@ -15,6 +15,7 @@ namespace WinScrabble
         private string nom;             // nom du joueur 
         private List<string> lesMots;   // liste des mots proposés par le joueur
         private int totalPoints;        // nombre total de points du joueur
+        private string MeilleurMots; // MeilleurMots
         #endregion
 
         #region constructeur
@@ -27,6 +28,7 @@ namespace WinScrabble
             this.nom = unNom;
             this.lesMots = new List<string>();
             this.totalPoints = 0;
+            this.MeilleurMots = "";
         }
         #endregion
 
@@ -43,21 +45,22 @@ namespace WinScrabble
         }
 
         /// <summary>
-        /// retourne le nombre total de points du joueur
+        /// retourne le nombre total de points du joueur (getter)
         /// </summary>
         /// <returns>nombre total de points du joueur</returns>
-        public int GetTotalPoints()
+        public int GetTotalPoints(int point)
         {
+            point = this.totalPoints;
             return this.totalPoints;
         }
 
         /// <summary>
-        /// retourne le nombre de mots du joueur
+        /// retourne le nombre total de points du joueur ( version pour récupérer )
         /// </summary>
-        /// <returns>nombre de mots du joueur</returns>
-        public int GetNbMots()
+        /// <returns></returns>
+        public int GetPoints()
         {
-            return this.lesMots.Count(); ;
+            return this.totalPoints;
         }
         /// <summary>
         /// retourne la liste des mots du joueur
@@ -65,28 +68,39 @@ namespace WinScrabble
         /// <returns>liste de mots du joueur</returns>
         public List<string> GetLesMots()
         {
-            //TODO
             return this.lesMots;
         }
+
+        #region Wipe
+        public List<string> WipeList()
+        {
+            this.lesMots.Clear();
+            return this.lesMots;
+        }
+
+        public int WipePoints()
+        {
+            this.totalPoints = 0;
+            return this.totalPoints;
+        }
+
+        public string WipeMeilleurMot()
+        {
+            this.MeilleurMots = "";
+            return this.MeilleurMots;
+        }
+
+        #endregion
 
         /// <summary>
         /// retourne le mot qui a rapporté le plus grand nombre de points 
         /// parmi les mots proposés par le joueur
         /// </summary>
         /// <returns>mot qui a rapporté le plus grand nombre de points</returns>
-        public string MotMeilleur()
+        public string MotMeilleur(string mot)
         {
-            string MeilleurMot = "";
-            int nbpoints = 0;
-            foreach (string mot in this.lesMots)
-                {
-                int points = Utilitaire.PointsMot(mot);
-                if (points > nbpoints)
-                {
-                    MeilleurMot = mot;
-                }
-            }
-            return MeilleurMot;
+            mot = this.MeilleurMots;
+            return this.MeilleurMots;
         }
         /// <summary>
         /// Méthode qui retourne le nom du joueur

@@ -93,5 +93,14 @@
   <ItemGroup>
     <None Include="Resources\1323577.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\istockphoto-525271979-612x612 %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pngtree-scrabble-words-with-a-yellow-smiley-face-image_13206225.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\city-lights-tokyo-night-wallpaper-preview.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
