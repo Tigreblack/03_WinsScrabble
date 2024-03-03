@@ -123,6 +123,7 @@ namespace WinScrabble
 
                 // disable groupebox 2
                 gpJ2.Enabled = false;
+                gpJ1.Enabled = true;
             }
             else 
             {
@@ -145,7 +146,8 @@ namespace WinScrabble
                 nbmotsJ2.Enabled = false;
 
                 // disable groupbox 1
-                gpJ1.Enabled = false; 
+                gpJ1.Enabled = false;
+                gpJ2.Enabled = true;
             }
 
             // attributs le nom du joueur qui joue a Joueurtxt
