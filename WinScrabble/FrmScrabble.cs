@@ -15,6 +15,7 @@ namespace WinScrabble
     {
         Joueur Joueur1;
         Joueur Joueur2;
+
         #region attributs privées
 
         // Tab pages
@@ -42,10 +43,12 @@ namespace WinScrabble
         private bool condJ2 = false;
 
         #endregion
+
         public FrmScrabble()
         {
             InitializeComponent();
 
+            #region TabControl
             // assignation de variables local aux tabpages existantes
             var tabGame1 = tabControl.TabPages[0];
             var tabGagnant1 = tabControl.TabPages[2];
@@ -62,6 +65,9 @@ namespace WinScrabble
 
             // choisis la tab Joueurs au débuts
             tabControl.SelectedTab = Joueurs;
+
+            #endregion
+
         }
 
         /// <summary>
@@ -75,21 +81,28 @@ namespace WinScrabble
             Joueur1 = new Joueur(txtJ1.Text);
             Joueur2 = new Joueur (txtJ2.Text);
 
-
+            #region Replay Parameters (1/3)
             // si la partie a recommencer
             gpJ1.Text = "Joueur :";
             gpJ2.Text = "Joueur :";
+
+            #endregion
 
             // assignation des noms
 
             gpJ1.Text = gpJ1.Text + Joueur1.GetunNom();
             gpJ2.Text = gpJ2.Text + Joueur2.GetunNom();
 
+            #region Replay Parameters (2/3)
+
             // Supprime la tabPages
 
             txtJ1.Text = "";
             txtJ2.Text = "";
 
+            #endregion
+
+            // Tab Joueurs Supprimée
             tabControl.TabPages.Remove(Joueurs);
 
             // Focus sur la tab Jeu
@@ -99,7 +112,7 @@ namespace WinScrabble
             // Choisis un joueur random
             var JoueurRandom = Utilitaire.RandomJoueur(Joueur1, Joueur2);
 
-
+            #region Disable other player GP
             // Désactive la groupbox du joueurs qui ne joue pas au 1er round
             if (JoueurRandom == Joueur1)
             {
@@ -154,11 +167,15 @@ namespace WinScrabble
             Joueurtxt.Text = JoueurRandom.GetunNom();
             Joueurtxt.Enabled = false;
 
+            #endregion
 
-            // Choisis les lettres
-
+            #region Replay Parameters (3/3)
             // Si rejouer
             txtlettres.Text = "";
+
+            #endregion
+
+            // Choisis les lettres
 
             string[] lettreschoisis = Utilitaire.RandomLettres();
 
@@ -173,6 +190,7 @@ namespace WinScrabble
             txtround.Text = round.ToString();
             txtround.Enabled = false;
 
+
             // Conversion de la chaine de lettre en string sans les virgules et espaces
             // Utiles pour plus tard pour vérifier
 
@@ -182,6 +200,8 @@ namespace WinScrabble
         private void ValiderJ1_Click(object sender, EventArgs e)
         {
             condJ1 = true;
+
+            #region Vérifications letrres J1
             bool verifie = Utilitaire.Verificationlettres(txtmotsJ1.Text, lettres);
             if (verifie == true)
             {
@@ -189,8 +209,11 @@ namespace WinScrabble
                 txtmotsJ1.Clear();
                 txtmotsJ1.Focus();
             }
+            #endregion
+
             else
             {
+                #region Actualisse le Round et conditions (1/2)
                 if (round == 10)
                 {
                     System.Windows.Forms.MessageBox.Show("Dernier round, le gagnant sera annoncé après ce round !");
@@ -208,9 +231,29 @@ namespace WinScrabble
                         condJ2 = false;
                     }
                 }
+                #endregion
 
                 if (round < 11)
                 {
+                    #region lettre
+                    // Lettre au hasard
+
+                    string[] lettreschoisis = Utilitaire.RandomLettres();
+
+                    foreach (var value in lettreschoisis)
+                    {
+                        txtlettres.Text = txtlettres.Text + value;
+                    }
+
+                    txtlettres.Enabled = false;
+
+                    // Conversion de la chaine de lettre en string sans les virgules et espaces
+                    // Utiles pour plus tard pour vérifier
+
+                    lettres = Utilitaire.Nettoyage(lettreschoisis);
+
+                    #endregion
+
                     // Ajout d'un mot dans la liste atrribuer a joueur 2
                     Joueur1.AjouterMot(txtmotsJ1.Text);
 
@@ -226,6 +269,31 @@ namespace WinScrabble
                     nbsmotsJ1 = nbsmotsJ1 + 1;
                     nbmotsJ1.Text = nbsmotsJ1.ToString();
 
+                    #region Lettre pour Autre Joueur
+                    // Rafraichissment lettre
+
+                    txtlettres.Text = "";
+                    lettres = "";
+
+                    // Lettre au hasard
+
+                    lettreschoisis = Utilitaire.RandomLettres();
+
+                    foreach (var value in lettreschoisis)
+                    {
+                        txtlettres.Text = txtlettres.Text + value;
+                    }
+
+                    txtlettres.Enabled = false;
+
+
+                    // Conversion de la chaine de lettre en string sans les virgules et espaces
+                    // Utiles pour plus tard pour vérifier
+
+                    lettres = Utilitaire.Nettoyage(lettreschoisis);
+                    #endregion
+
+                    #region parametersJ1
                     // active l'autre groupe box
                     gpJ1.Enabled = false;
                     gpJ2.Enabled = true;
@@ -243,8 +311,12 @@ namespace WinScrabble
 
                     // clear de la textbox
                     txtmotsJ1.Clear();
+
+                    #endregion
+
                 }
 
+                #region Après le Round 10 Données restantes
                 if (round > 10)
                 {
                     if (condJ1 == false)
@@ -282,6 +354,9 @@ namespace WinScrabble
                         nbsmotsJ2 = nbsmotsJ2 + 1;
                         nbmotsJ2.Text = nbsmotsJ2.ToString();
                     }
+                    #endregion
+
+                    #region gagnantJ1
 
                     // Tab gagnant
                     tabControl.TabPages.Add(tabGagnant);
@@ -315,6 +390,8 @@ namespace WinScrabble
                         listGagnant.DataSource = Joueur2.GetLesMots();
                         txtgagnantmmot.Text = mmotsJ2;
                     }
+
+                    #endregion
                 }
             }
         }
@@ -322,6 +399,8 @@ namespace WinScrabble
         private void ValiderJ2_Click(object sender, EventArgs e)
         {
             condJ2 = true;
+
+            #region VérficationsLettresJ2
             bool verifie = Utilitaire.Verificationlettres(txtmotsJ2.Text, lettres);
             if (verifie == true)
             {
@@ -329,12 +408,12 @@ namespace WinScrabble
                 txtmotsJ2.Clear();
                 txtmotsJ2.Focus();
             }
+
+            #endregion
+
             else
             {
-                if (round == 10)
-                {
-                    System.Windows.Forms.MessageBox.Show("Dernier round, le gagnant sera annoncé après ce round !");
-                }
+                #region Actualisse le Round  et conditions (2/2)
 
                 if (condJ1 == true && condJ2 == true)
                 {
@@ -350,8 +429,29 @@ namespace WinScrabble
                     condJ2 = false;
                 }
 
+                #endregion
+
                 if (round <= 11)
                 {
+                    #region lettre
+                    // Lettre au hasard
+
+                    string[] lettreschoisis = Utilitaire.RandomLettres();
+
+                    foreach (var value in lettreschoisis)
+                    {
+                        txtlettres.Text = txtlettres.Text + value;
+                    }
+
+                    txtlettres.Enabled = false;
+
+                    // Conversion de la chaine de lettre en string sans les virgules et espaces
+                    // Utiles pour plus tard pour vérifier
+
+                    lettres = Utilitaire.Nettoyage(lettreschoisis);
+
+                    #endregion
+
                     // Ajout d'un mot dans la liste atrribuer a joueur 2
                     Joueur2.AjouterMot(txtmotsJ2.Text);
 
@@ -368,6 +468,31 @@ namespace WinScrabble
                     nbsmotsJ2 = nbsmotsJ2 + 1;
                     nbmotsJ2.Text = nbsmotsJ2.ToString();
 
+                    #region lettre pour prochain Joueur
+                    // Rafraichissment lettre
+
+                    txtlettres.Text = "";
+                    lettres = "";
+
+                    // Lettre au hasard
+
+                    lettreschoisis = Utilitaire.RandomLettres();
+
+                    foreach (var value in lettreschoisis)
+                    {
+                        txtlettres.Text = txtlettres.Text + value;
+                    }
+
+                    txtlettres.Enabled = false;
+
+                    // Conversion de la chaine de lettre en string sans les virgules et espaces
+                    // Utiles pour plus tard pour vérifier
+
+                    lettres = Utilitaire.Nettoyage(lettreschoisis);
+
+                    #endregion
+                    
+                    #region parmatersJ2
                     // active l'autre groupe box
                     gpJ2.Enabled = false;
                     gpJ1.Enabled = true;
@@ -385,7 +510,12 @@ namespace WinScrabble
 
                     // clear de la textbox
                     txtmotsJ2.Clear();
+
+                    #endregion
+
                 }
+
+                #region Après le round 10 Données restantes
 
                 if (round > 10)
                 {
@@ -424,7 +554,9 @@ namespace WinScrabble
                         nbsmotsJ2 = nbsmotsJ2 + 1;
                         nbmotsJ2.Text = nbsmotsJ2.ToString();
                     }
+                    #endregion
 
+                    #region gagnantJ2
                     // Tab gagnant
                     tabControl.TabPages.Add(tabGagnant);
 
@@ -458,6 +590,7 @@ namespace WinScrabble
                         txtgagnantmmot.Text = mmotsJ2;
                     }
 
+                    #endregion
                 }
             }
         }
